@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxd.smsnew.dao.ICourseDao">
+
+    <select id="selectCoursesByPage" resultType="com.jxd.smsnew.vo.CourseVO">
+        SELECT
+        c.course_id,
+        c.course_name,
+        c.teacher_id,
+        c.course_time,
+        c.classroom,
+        c.class_week,
+        c.course_type,
+        c.college_id,
+        c.score,
+        t.teacher_name,
+        col.college_name
+        FROM course c
+        LEFT JOIN teacher t ON c.teacher_id = t.teacher_id
+        LEFT JOIN college col ON c.college_id = col.college_id
+        <where>
+            <if test="courseName != null and courseName != ''">
+                c.course_name LIKE CONCAT('%', #{courseName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCoursesByTeacherId" resultType="com.jxd.smsnew.vo.CourseVO">
+        SELECT
+            c.course_id,
+            c.course_name,
+            c.teacher_id,
+            c.course_time,
+            c.classroom,
+            c.class_week,
+            c.course_type,
+            c.college_id,
+            c.score,
+            t.teacher_name,
+            col.college_name
+        FROM course c
+                 LEFT JOIN teacher t ON c.teacher_id = t.teacher_id
+                 LEFT JOIN college col ON c.college_id = col.college_id
+        WHERE c.teacher_id = #{username}
+    </select>
+
+</mapper>

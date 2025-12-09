@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxd.smsnew.dao.IStudentDao">
+
+    <select id="selectStudentsByPage" resultType="com.jxd.smsnew.vo.StudentVO">
+        SELECT
+        s.student_id,
+        s.student_name,
+        s.sex,
+        s.birthday,
+        s.enrollment_date,
+        s.college_id,
+        c.college_name
+        FROM student s
+        LEFT JOIN college c ON s.college_id = c.college_id
+        <where>
+            <if test="studentName != null and studentName != ''">
+                s.student_name LIKE CONCAT('%', #{studentName}, '%')
+            </if>
+            <if test="collegeId != null">
+                AND s.college_id = #{collegeId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="bulkDelete">
+        DELETE FROM student WHERE student_id IN
+        <foreach collection="studentIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

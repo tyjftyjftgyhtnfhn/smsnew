@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxd.smsnew.dao.IUserLoginDao">
+
+    <select id="selectByUsername" resultType="com.jxd.smsnew.model.UserLogin">
+        SELECT user_id,
+               username,
+               password,
+               role
+        FROM userlogin
+        WHERE username = #{username}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE userlogin
+        SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
+    <delete id="bulkDelete">
+        DELETE FROM userlogin WHERE username IN
+        <foreach collection="usernames" item="username" open="(" separator="," close=")">
+            #{username}
+        </foreach>
+    </delete>
+</mapper>

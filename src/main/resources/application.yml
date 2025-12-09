@@ -1,0 +1,27 @@
+# Spring Boot 服务配置
+server:
+  port: 8080 # 项目运行的端口
+
+# Spring Framework 配置
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/student_management_system?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  # MyBatis-Plus 配置
+mybatis-plus:
+  # 扫描 Mapper XML 文件位置
+  mapper-locations: classpath:com/jxd/smsnew/dao/mapping/*.xml
+  type-aliases-package: com.jxd.smsnew.model # 扫描实体类包路径
+  configuration:
+    # 开启驼峰命名自动映射
+    # 将数据库的下划线字段名（例如 student_name）自动映射为实体类的小驼峰属性名（例如 studentName）
+    map-underscore-to-camel-case: true
+    # 开启日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    com.jxd.smsnew.dao: DEBUG
