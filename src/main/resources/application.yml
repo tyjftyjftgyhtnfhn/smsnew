@@ -25,4 +25,5 @@ mybatis-plus:
 logging:
   level:
     com.jxd.smsnew.dao: DEBUG
+
 #
